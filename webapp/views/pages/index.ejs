@@ -5,27 +5,26 @@
 <head>
 	<% include ../partials/head %>
 </head>
-<body class="container">
+<body>
 
 	<header>
 		<% include ../partials/header %>
 	</header>
 
 	<main>
-		<div class="jumbotron">
-			<h1>This is great</h1>
-			<p>Welcome to templating using ejs</p>
+		 <div class="row">
+        	<div class="col-lg-8 col-sm-8 col-lg-offset-4 text-center">
+        		<div class="container-4">
+        			<form action="/searchSimple" method="post">
+                    <input type="search" id="search" name="searchQuery" placeholder="Search for monsters..." />
+                    <button class="icon"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+        	</div>
+        </div>
 
-		<form action="/test" method="post" id="insertMonster">
-				<input type="text" name="monsterName" placeholder="Monster name"><br>
-				<input type="text" name="monsterCharcteristics" placeholder="Characteristics"><br>
-				<input type="text" name="monsterLocation" placeholder="Location"><br>
-				<input type="text" name="monsterFood" placeholder="Feeding habbits"><br>
-				<input type="text" name="monsterDesc" placeholder="text"><br>
-				<button type="submit">Add monster to db</button>
-			</form>
+        <% include ../partials/simpleSearch %>
 
-		</div>
 	</main>
 
 	<footer>

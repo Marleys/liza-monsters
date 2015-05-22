@@ -1,0 +1,16 @@
+     <div class="row">
+    <div class="col-lg-8 col-sm-8 col-lg-offset-4 text-center">
+
+    	<ul>
+    	<% if(simpleSearch != "undefined") { %>
+    		<% for(var i = 0; i < simpleSearch.length; i++) { %>
+    			<li>
+    				<a href="/view/<%= simpleSearch[i].monsterName %>"><%= simpleSearch[i].monsterName %></a>
+    			</li>
+    		<% } %>
+    	<% } %>
+    	</ul><!-- end ul -->
+
+    </div><!-- end col-lg-8 -->
+
+</div>
