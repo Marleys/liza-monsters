@@ -26,10 +26,30 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 })); 
 
+// -----------------
+app.param('id', function(req, res, next, id) {
+
+	r.table('monsters').filter(r.row('monsterName').match('(?i)^' + id))
+	.run(req._rdbConn, function(error, cursor) {
+		if(error) return next(error);
+		if(!cursor) return next(new Error('Nothing is found'));
+		req.monster = cursor.toArray(function(error, result) {
+			if (error) return(error);
+			return result;
+		});
+		next();
+	});
+	
+});
+
+
+
+
+
 //add monster on post
 app.post('/test', addMonsters);
 app.post('/searchSimple', searchBar);
-
+app.post('/update', updateMonster);
 
 // ------------------ * render pages * ------------------
 
@@ -64,30 +84,59 @@ app.get('/about', function(req, res) {
 // -----------------------------------------
 
 // views page
-app.get('/view/:name', function(req, res) {
+app.get('/view/:id', function(req, res) {
 
-	var nameReq = req.params.name;
-		console.log(nameReq);
-		r.table('monsters').filter(
+	console.log(req.monster);
+	res.render('pages/view', {
+		monster: req.monster
+	});
 
-			r.row('monsterName').match('(?i)^' + nameReq)
 
-			).run(req._rdbConn, function(error, cursor) {
+});
 
-				if(error) throw(error);
-				cursor.toArray(function(error, result) {
+//------------------------
 
-					if(error) throw(error);
-					console.log(result);
+app.get('/all', function(req, res, next) {
 
-				});
 
-			});
+	r.table('monsters').run(req._rdbConn, function(error, allMonsters) {
+		if(error) return next(error);
+		req.allMonsters = allMonsters.toArray(function(error, result) {
+			if (error) return(error);
+			return result;
+		});
+		console.log(req.allMonsters);
+		res.render('pages/all', {
+			allMonsters: req.allMonsters
+		});
+	}); 
+
+	
+
+	
+	/*res.render('pages/edit', {
+
+		allMonsters: req.all
+
+	});*/
+
+});
+
+app.get('/edit/:id', function(req, res) {
+
+	console.log(req.monster);
+	res.render('pages/edit', {
+		monster: req.monster
+	});
+
+
 });
 
 // ------------------ * global variables * ------------------
 
 var simpleSearch = [];
+
+
 
 
 // ------------------ * functions section * ------------------
@@ -148,6 +197,19 @@ function addMonsters(req, res, next) {
 
 	});
 }
+// -----------------------------------------
+
+function updateMonster(req, res, next) {
+	console.log(req.body);
+	var monster = req.body;
+	var monsterId = req.params.name;
+
+	r.table('monsters').get(monsterId).update(monster).run(req.rdbConn, function(err, result) {
+		if(err) {
+			return next(err);
+		}
+	});
+}
 
 // -----------------------------------------
 
@@ -182,20 +244,68 @@ function searchBar(req, res, next) {
 // -----------------------------------------
 
 // just a simple search filtering by monsterName
-function searchName(req, res) {
+/*function searchName(req, res) {
+		var nameReq = req.params.name;
+		r.table('monsters').filter(
+
+			r.row('monsterName').match('(?i)^' + nameReq)
+
+			).run(req._rdbConn, function(error, cursor) {
+
+				if(error) throw(error);
+				 cursor.toArray(function(error, result) {
+
+					if(error) throw(error);
+					return result;
+				
+
+				});
+
+			});  
+
+}*/
+
+/*function searchName(req, res, next) {
+	//var nameReq = req.params.name;
+	r.table('monsters').filter(r.row('monsterName').match('(?i)^' + req.params.name)).run(req._rdbConn, function(err, cursor) {
+		if(err) {
+			return next(err);
+		} else {
+			cursor.toArray(function(err, result) {
+				if(err) {
+					return next(err);
+				} else {
+					req.test = result;
+				}
+			});
+		} next();
+	}); 
+}*/
+
+/*function getMonster(req, res, next) {
+
+	var test = req.params.monsterName;
+
+	r.table('monsters').filter(r.row('monsterName').match('(?i)^' + test)).run(req._rdbConn).then(function(cursor) {
+		return cursor.toArray();
+	}).then(function(result) {
+		res.send(JSON.stringify(result));
+	}).error(handleError(res))
+	.finally(next);
+}*/
 
 
 
-}
 
 // -----------------------------------------
 
 // get error message
-function handleError(res, error) {
-
-    return res.status(500).send({error: error.message});
-
+function handleError(res) {
+    return function(error) {
+        res.send(500, {error: error.message});
+    }
 }
+
 
 
 // ------------------ * start the server * ------------------

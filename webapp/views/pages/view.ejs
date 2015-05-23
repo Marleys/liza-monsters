@@ -1,0 +1,37 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body>
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main><div class="container-fluid">
+		 <div class="row">
+		 	 <div class="col-lg-6 col-sm-6 col-lg-offset-6">
+			 	 <ul>
+					<% monster._settledValue.forEach(function(monster) { %>
+					<li><h2><%= monster.monsterName %></h2> </li>
+					<li><h3><%= monster.monsterCharcteristics %> </h3></li>
+					<li><h3><%= monster.monsterFood %> </h3></li>
+					<li><h3><%= monster.monsterLocation %> </h3></li>
+					<li><p><%= monster.monsterDesc %></p> </li>
+					<%});%>
+				</ul>
+  </div>
+        </div>
+</div>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+
+
+</body>
+</html>

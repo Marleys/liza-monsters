@@ -6,8 +6,6 @@ background-image: url(../images/test-01-01.png);
   	background-repeat: no-repeat;
   	background-attachment: absolute;
   	background-size: cover;
-
-    color:#fff;
 }
 
 @media screen and (max-width: 768px) {
@@ -19,14 +17,6 @@ background-image: url(../images/test-01-01.png);
   }
 
  }
-
-h2 {
-  font-family:'Lato', sans-serif;
-  font-weight: 900;
-  font-size:45px;
-  text-transform: uppercase;
-
-}
 
  /* ------------ divs and classes ------------- */
 .navbar {
@@ -153,8 +143,3 @@ box-shadow:         -5px 9px 5px 0px rgba(50, 50, 50, 0.75);
   .container-4:hover button.icon:hover{
     background: #7E281B;
   }
-
-ul {
-
-  list-style-type: none;
-}

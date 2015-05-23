@@ -1,0 +1,34 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body>
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+		 <div class="row">
+		 	 <div class="col-lg-8 col-sm-8 col-lg-offset-4 text-center">
+			 	 <ul>
+					<% for(var i = 0; i < allMonsters._settledValue.length; i++) { %>
+					<li><h2><a href="edit/<%= allMonsters._settledValue[i].monsterName%>"><%= allMonsters._settledValue[i].monsterName %></a></h2> </li>
+					<%}%>
+				</ul>
+				
+  </div>
+        </div>
+
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+
+
+</body>
+</html>

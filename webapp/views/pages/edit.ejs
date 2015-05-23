@@ -1,0 +1,39 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<% include ../partials/head %>
+</head>
+<body>
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<main>
+		 <div class="row">
+		 	 <div class="col-lg-8 col-sm-8 col-lg-offset-4 ">
+			 	  <form action="/update/<% monster._settledValue.id %>" method="post" id="insertMonster">
+					<% monster._settledValue.forEach(function(monster) { %>
+					<input type="text" value="<%= monster.monsterName %>" name="monsterName"> Monster name<br>
+					<input type="text" value="<%= monster.monsterCharcteristics %>" name="monsterCharcteristics"> Monster characteristics<br>
+					<input type="text" value="<%= monster.monsterFood %>" name="monsterFood"> Monster food<br>
+					<input type="text" value="<%= monster.monsterLocation %>" name="monsterLocation"> Monster Location<br>
+					<input type="text" value="<%= monster.monsterDesc %>" name="monsterDesc"> monster description<br>
+					<button type="submit">update Monster</button>
+					<%});%>
+				</form>
+					
+  </div>
+        </div>
+
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+
+
+</body>
+</html>
