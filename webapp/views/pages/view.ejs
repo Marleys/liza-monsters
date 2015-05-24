@@ -17,12 +17,13 @@
 			 	 <ul>
 					<% monster._settledValue.forEach(function(monster) { %>
 					<li><h2><%= monster.monsterName %></h2> </li>
-					<li><h3><%= monster.monsterCharcteristics %> </h3></li>
-					<li><h3><%= monster.monsterFood %> </h3></li>
-					<li><h3><%= monster.monsterLocation %> </h3></li>
+					<li><h3>Characteristics: <%= monster.monsterCharcteristics %> </h3></li>
+					<li><h3>Food of choice: <%= monster.monsterFood %> </h3></li>
+					<li><h3>Location: <%= monster.monsterLocation %> </h3></li>
 					<li><p><%= monster.monsterDesc %></p> </li>
-					<%});%>
+					<% });%>
 				</ul>
+
   </div>
         </div>
 </div>

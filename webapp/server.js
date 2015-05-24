@@ -51,13 +51,43 @@ app.post('/test', addMonsters);
 app.post('/searchSimple', searchBar);
 app.post('/update', updateMonster);
 
+function latest(req, res, next) {
+	r.table('monsters').orderBy(r.desc('createdAt')).limit(5)
+	.run(req._rdbConn, function(error, latest) {
+
+		if(error) return next(error);
+		
+		req.latest = latest;
+		next();
+	});
+
+}
+
+function numberOfMonsters(req, res, next) {
+
+	 r.table('monsters').count()
+	.run(req._rdbConn, function(error, result) {
+		if(error) return next(error);
+		
+		req.total = result;
+		next();
+	});
+
+}
+
 // ------------------ * render pages * ------------------
 
 // index page
-app.get('/', function(req, res) {
+app.get('/', latest, numberOfMonsters, function(req, res, next) {
+	
 	
     res.render('pages/index', {
+    	latest: req.latest,
+    	total: req.total,
 
+	
+		
+	
 		simpleSearch: simpleSearch
 
     });

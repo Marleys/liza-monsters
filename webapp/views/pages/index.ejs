@@ -19,8 +19,24 @@
                     <input type="search" id="search" name="searchQuery" placeholder="Search for monsters..." />
                     <button class="icon"><i class="fa fa-search"></i></button>
                     </form>
+                   
+                
+					                   	
                 </div>
         	</div>
+        </div>
+        <div class="row">
+
+        	<div class="col-lg-3 col-lg-offset-5">
+        	  	<h2>Monsters<br> stored in DB: <%= total %> </h2>
+        	</div>
+        	<div class="col-lg-3">
+                   	<h2>Latest monsters:</h2>
+                   	<% for(var i = 0; i < latest.length; i++) { %> 
+                   		<a href="/view/<%= latest[i].monsterName %>"><h3><%= latest[i].monsterName %> </h3></a>
+                   	<%}%>
+        	</div>
+
         </div>
 
         <% include ../partials/simpleSearch %>
