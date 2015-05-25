@@ -43,14 +43,10 @@ app.param('id', function(req, res, next, id) {
 });
 
 
-
-
-
 //add monster on post
 app.post('/test', addMonsters);
 app.post('/searchSimple', searchBar);
 app.post('/update', updateMonster);
-
 
 
 // ------------------ * render pages * ------------------
@@ -78,13 +74,6 @@ app.get('/about', function(req, res) {
 
 });
 
-// -----------------------------------------
-
-/*app.get('/view', function(req, res) {
-
-	res.render('pages/about');
-
-});*/
 
 // -----------------------------------------
 
@@ -116,16 +105,8 @@ app.get('/all', function(req, res, next) {
 		});
 	}); 
 
-	
-
-	
-	/*res.render('pages/edit', {
-
-		allMonsters: req.all
-
-	});*/
-
 });
+
 
 app.get('/edit/:id', function(req, res) {
 
@@ -136,6 +117,7 @@ app.get('/edit/:id', function(req, res) {
 
 
 });
+
 
 app.get('/update', function(req, res) {
 
@@ -246,8 +228,8 @@ function updateMonster(req, res, next) {
 		if(err) {
 			return next(err);
 
-		} result;
-		next();
+		} 
+		res.redirect('/view/'+req.body.id);
 		
 	});
 }
@@ -272,7 +254,10 @@ function searchBar(req, res, next) {
 			cursor.toArray(function(error, result) {
 
 				if(error) throw(error);
+				//req.simpleSearch = result;
 				res.redirect('/');
+				
+
 				return simpleSearch = result;
 
 			});
