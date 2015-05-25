@@ -10,7 +10,7 @@
 	<header>
 		<% include ../partials/header %>
 	</header>
-
+<div id="wrap">
 	<main>
 		 <div class="row">
         	<div class="col-lg-8 col-sm-8 col-lg-offset-4 text-center">
@@ -26,24 +26,27 @@
         	</div>
         </div>
         <div class="row">
-
-        	<div class="col-lg-3 col-lg-offset-5">
-        	  	<h2>Monsters<br> stored in DB: <%= total %> </h2>
+        <div id="info_section">
+        	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-offset-5 info">
+        	 <a href="/all"><i class="fa fa-info-circle fa-5x info_sign" title="show all monsters"></i></a>
+             <% include ../partials/simpleSearch %>
         	</div>
-        	<div class="col-lg-3">
-                   	<h2>Latest monsters:</h2>
+        	<div class="col-lg-3 col-md-2 latest_monsters">
+            <h3>Monsters<br> stored in DB: <%= total %> </h3>
+                   	<h3>Latest monsters:
                    	<% for(var i = 0; i < latest.length; i++) { %> 
-                   		<a href="/view/<%= latest[i].monsterName %>"><h3><%= latest[i].monsterName %> </h3></a>
+                   		<a href="/view/<%= latest[i].monsterName %>"><h3><%= latest[i].monsterName %> </h3></a></h3>
                    	<%}%>
+                    </div>
         	</div>
 
-        </div>
+     
 
-        <% include ../partials/simpleSearch %>
+        
+</main>
+	   </div>
 
-	</main>
-
-	<footer>
+	<footer class="footer">
 		<% include ../partials/footer %>
 	</footer>
 

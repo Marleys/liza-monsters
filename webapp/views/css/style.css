@@ -20,34 +20,78 @@ background-image: url(../images/test-01-01.png);
 
  }
 
+ form {
+
+  color: black;
+
+ }
+
+body, html {
+
+  height:100%;
+}
+
 h2 {
   font-family:'Lato', sans-serif;
   font-weight: 900;
-  font-size:45px;
+  font-size:4vh;
   text-transform: uppercase;
 
 }
 
  /* ------------ divs and classes ------------- */
+
+ #wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow:auto;
+  padding-bottom:150px; /* this needs to be bigger than footer height*/
+}
+
+.footer {
+  position: relative;
+  margin-top: -150px; /* negative value of footer height */
+  height: 150px;
+  clear:both;
+  padding-top:20px;
+  background-color: rgba(0,0,0,0.5);
+} 
+
+#info_section {
+
+  padding-top:10vh;
+  padding-left:3vw;
+  text-align: left;
+
+}
+
+.info {
+  text-align: right;
+}
+
+
 .navbar {
 	padding-top: 50px;
 	background: none;
 	border: none;
 	float:right;
-	margin-right:4vw;
+	margin-right:3.3vw;
 
 }
 
 #nav-off-canvas {
 	position:fixed;
 	left:105vw;
-	background-color: #000;
+	background-color: orange;
 	min-height: 100vh;
-	width:18vw;
+	width:10vw;
 	transition: left ease 0.3s;
 	-webkit-box-shadow: -5px 9px 5px 0px rgba(0, 0, 0, 0.75);
--moz-box-shadow:    -5px 9px 5px 0px rgba(0, 0, 0, 0.75);
-box-shadow:         -5px 9px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow:    -5px 9px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow:         -5px 9px 5px 0px rgba(0, 0, 0, 0.75);
+  z-index: 10;
 
 
 }
@@ -66,8 +110,14 @@ box-shadow:         -5px 9px 5px 0px rgba(0, 0, 0, 0.75);
 
 .fa:hover {
 
-	color: #E7E2CF;
+	color: black;
 	cursor: pointer;
+
+}
+
+.info_sign {
+
+  padding-top: 10px;
 
 }
 
@@ -76,7 +126,46 @@ box-shadow:         -5px 9px 5px 0px rgba(0, 0, 0, 0.75);
 	clear: both;
 }
  
+.displayMonster h2 {
+  padding-left: 10px;
+  color: orange;
+  background-color: black;
 
+}
+
+.container-fluid {
+
+  width:70vw;
+}
+
+.nav_stuff {
+
+  padding-top: 20vh;
+  text-align: center;
+  text-transform: uppercase;
+  padding-right:2.5vw;
+}
+
+h4 {
+
+  font-family:'Lato', sans-serif;
+  font-size: 10px;
+
+}
+
+h3 {
+
+  font-family:'Lato', sans-serif;
+  font-size: 20px;
+  font-weight:900;
+  text-transform: uppercase;
+}
+
+#menu-toggle {
+
+  z-index: 20;
+
+} 
 
  /* ------------ search bars ------------- */
 
@@ -157,4 +246,22 @@ box-shadow:         -5px 9px 5px 0px rgba(0, 0, 0, 0.75);
 ul {
 
   list-style-type: none;
+}
+
+a {
+
+  text-decoration: none;
+  color: orange;
+
+  -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+
+    transition:.5s;
+}
+
+.latest_monsters a:hover, .info a:hover {
+  text-decoration: none;
+  color:black;
 }

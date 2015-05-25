@@ -13,7 +13,7 @@ menuButton.addEventListener('click', function() {
 
 	if (menuButton.title == "false") {
 		
-		menuOffCanvas.style.left = '82vw';
+		menuOffCanvas.style.left = '90vw';
 		menuButton.title = "true";
 	
 	} else {

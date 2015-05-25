@@ -51,29 +51,7 @@ app.post('/test', addMonsters);
 app.post('/searchSimple', searchBar);
 app.post('/update', updateMonster);
 
-function latest(req, res, next) {
-	r.table('monsters').orderBy(r.desc('createdAt')).limit(5)
-	.run(req._rdbConn, function(error, latest) {
 
-		if(error) return next(error);
-		
-		req.latest = latest;
-		next();
-	});
-
-}
-
-function numberOfMonsters(req, res, next) {
-
-	 r.table('monsters').count()
-	.run(req._rdbConn, function(error, result) {
-		if(error) return next(error);
-		
-		req.total = result;
-		next();
-	});
-
-}
 
 // ------------------ * render pages * ------------------
 
@@ -82,12 +60,9 @@ app.get('/', latest, numberOfMonsters, function(req, res, next) {
 	
 	
     res.render('pages/index', {
-    	latest: req.latest,
-    	total: req.total,
 
-	
-		
-	
+    	latest: req.latest,
+    	total: req.total,	
 		simpleSearch: simpleSearch
 
     });
@@ -162,6 +137,12 @@ app.get('/edit/:id', function(req, res) {
 
 });
 
+app.get('/update', function(req, res) {
+
+	
+	res.render('pages/update');
+
+});
 // ------------------ * global variables * ------------------
 
 var simpleSearch = [];
@@ -194,6 +175,34 @@ function createConnection(req, res, next) {
 		}
 
 	});
+}
+
+// -----------------------------------------
+
+function latest(req, res, next) {
+	r.table('monsters').orderBy(r.desc('createdAt')).limit(5)
+	.run(req._rdbConn, function(error, latest) {
+
+		if(error) return next(error);
+		
+		req.latest = latest;
+		next();
+	});
+
+}
+
+// -----------------------------------------
+
+function numberOfMonsters(req, res, next) {
+
+	 r.table('monsters').count()
+	.run(req._rdbConn, function(error, result) {
+		if(error) return next(error);
+		
+		req.total = result;
+		next();
+	});
+
 }
 
 // -----------------------------------------
@@ -232,12 +241,14 @@ function addMonsters(req, res, next) {
 function updateMonster(req, res, next) {
 	console.log(req.body);
 	var monster = req.body;
-	var monsterId = req.params.name;
 
-	r.table('monsters').get(monsterId).update(monster).run(req.rdbConn, function(err, result) {
+	r.table('monsters').filter({monsterName: req.body.monsterName}).update(monster).run(req._rdbConn, function(err, result) {
 		if(err) {
 			return next(err);
-		}
+
+		} result;
+		next();
+		
 	});
 }
 
