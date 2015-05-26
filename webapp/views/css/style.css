@@ -31,6 +31,15 @@ body, html {
   height:100%;
 }
 
+h1 {
+
+	font-family:'Lato', sans-serif;
+  	font-weight: 900;
+  	font-size:5	vh;
+  	text-transform: uppercase;
+
+}
+
 h2 {
   font-family:'Lato', sans-serif;
   font-weight: 900;
@@ -117,7 +126,7 @@ h2 {
 
 .info_sign {
 
-  padding-top: 10px;
+  padding-top: 20px;
 
 }
 
@@ -159,6 +168,7 @@ h3 {
   font-size: 20px;
   font-weight:900;
   text-transform: uppercase;
+  margin-top:5px;
 }
 
 #menu-toggle {
@@ -166,6 +176,25 @@ h3 {
   z-index: 20;
 
 } 
+
+.edit {
+
+	float: right;
+	padding-bottom:25px;
+}
+
+.orange {
+
+	color: orange;
+	display:inline;
+
+}
+
+.black {
+
+	display:inline;
+
+}
 
  /* ------------ search bars ------------- */
 
@@ -261,7 +290,20 @@ a {
     transition:.5s;
 }
 
+a:hover {
+
+	text-decoration: none;
+	color: black;
+
+}
+
 .latest_monsters a:hover, .info a:hover {
   text-decoration: none;
   color:black;
+}
+
+a:focus {
+
+	text-decoration: none;
+	color:black;
 }

@@ -27,9 +27,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 })); 
 
 // -----------------
-app.param('id', function(req, res, next, id) {
+app.param('name', function(req, res, next, name) {
 
-	r.table('monsters').filter(r.row('monsterName').match('(?i)^' + id))
+	r.table('monsters').filter(r.row('monsterName').match('(?i)^' + name))
 	.run(req._rdbConn, function(error, cursor) {
 		if(error) return next(error);
 		if(!cursor) return next(new Error('Nothing is found'));
@@ -78,7 +78,7 @@ app.get('/about', function(req, res) {
 // -----------------------------------------
 
 // views page
-app.get('/view/:id', function(req, res) {
+app.get('/view/:name', function(req, res) {
 
 	console.log(req.monster);
 	res.render('pages/view', {
@@ -108,7 +108,7 @@ app.get('/all', function(req, res, next) {
 });
 
 
-app.get('/edit/:id', function(req, res) {
+app.get('/edit/:name', function(req, res) {
 
 	console.log(req.monster);
 	res.render('pages/edit', {
@@ -119,10 +119,28 @@ app.get('/edit/:id', function(req, res) {
 });
 
 
-app.get('/update', function(req, res) {
+app.get('/update/:id', function(req, res, next) {
+
+	var id = req.params.id;
+
+	r.table('monsters').get(id)
+	.run(req._rdbConn, function(error, monster) {
+		if (error) throw(error);
+		res.render('pages/update', {
+
+		monster: monster
+
+	});
+	});
 
 	
-	res.render('pages/update');
+
+
+});
+
+app.get('/search', function(req, res) {
+
+	res.render('pages/search');
 
 });
 // ------------------ * global variables * ------------------
@@ -224,12 +242,12 @@ function updateMonster(req, res, next) {
 	console.log(req.body);
 	var monster = req.body;
 
-	r.table('monsters').filter({monsterName: req.body.monsterName}).update(monster).run(req._rdbConn, function(err, result) {
+	r.table('monsters').filter({id: req.body.id}).update(monster).run(req._rdbConn, function(err, result) {
 		if(err) {
 			return next(err);
 
 		} 
-		res.redirect('/view/'+req.body.id);
+		res.redirect('/update/'+req.body.id);
 		
 	});
 }

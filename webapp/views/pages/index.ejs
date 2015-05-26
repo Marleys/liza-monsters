@@ -32,10 +32,10 @@
              <% include ../partials/simpleSearch %>
         	</div>
         	<div class="col-lg-3 col-md-2 latest_monsters">
-            <h3>Monsters<br> stored in DB: <%= total %> </h3>
+            <h3 class="black">Monsters<br> stored in DB:</h3><h3 class="orange"> <%= total %> </h3>
                    	<h3>Latest monsters:
                    	<% for(var i = 0; i < latest.length; i++) { %> 
-                   		<a href="/view/<%= latest[i].monsterName %>"><h3><%= latest[i].monsterName %> </h3></a></h3>
+                   		<h3><a href="/view/<%= latest[i].monsterName %>"><%= latest[i].monsterName %> </a></h3></h3>
                    	<%}%>
                     </div>
         	</div>

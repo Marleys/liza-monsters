@@ -18,6 +18,7 @@
 			 	 <ul>
 					<% monster._settledValue.forEach(function(monster) { %>
 					<li><h2 id="headMonster"><%= monster.monsterName %></h2> </li>
+					<li><a href="/edit/<%= monster.monsterName %>"<i class="fa fa-pencil-square-o fa-3x edit"></i></a></li>
 					<li><h3>Characteristics: <%= monster.monsterCharcteristics %> </h3></li>
 					<li><h3>Food of choice: <%= monster.monsterFood %> </h3></li>
 					<li><h3>Location: <%= monster.monsterLocation %> </h3></li>

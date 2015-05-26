@@ -15,7 +15,18 @@
 	<main>
 		 <div class="row">
 		 	 <div class="col-lg-6 col-sm-6 col-lg-offset-6 displayMonster">
-			 	 
+			 	 <h1>Updated:</h1>
+			 	 <ul>
+			 	 	<% console.log(monster) %> 
+				
+					<li><h2 id="headMonster"><%= monster.monsterName %></h2> </li>
+					<li><a href="/edit/<%= monster.monsterName %>"<i class="fa fa-pencil-square-o fa-3x edit"></i></a></li>
+					<li><h3>Characteristics: <%= monster.monsterCharcteristics %> </h3></li>
+					<li><h3>Food of choice: <%= monster.monsterFood %> </h3></li>
+					<li><h3>Location: <%= monster.monsterLocation %> </h3></li>
+					<li><p><%= monster.monsterDesc %></p> </li>
+				
+				</ul>
 				
   				</div>
        		</div>
