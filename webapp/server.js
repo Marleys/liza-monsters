@@ -47,6 +47,7 @@ app.param('name', function(req, res, next, name) {
 app.post('/test', addMonsters);
 app.post('/searchSimple', searchBar);
 app.post('/update', updateMonster);
+app.post('/searchAll', searchAll);
 
 
 // ------------------ * render pages * ------------------
@@ -141,6 +142,23 @@ app.get('/update/:id', function(req, res, next) {
 app.get('/search', function(req, res) {
 
 	res.render('pages/search');
+
+});
+
+app.get('/allEdit', function(req, res, next) {
+
+
+	r.table('monsters').run(req._rdbConn, function(error, allMonsters) {
+		if(error) return next(error);
+		req.allMonsters = allMonsters.toArray(function(error, result) {
+			if (error) return(error);
+			return result;
+		});
+		console.log(req.allMonsters);
+		res.render('pages/allEdit', {
+			allMonsters: req.allMonsters
+		});
+	}); 
 
 });
 // ------------------ * global variables * ------------------
@@ -254,17 +272,35 @@ function updateMonster(req, res, next) {
 
 // -----------------------------------------
 
+/* // for reference only. Should work but returns empty <--- check this out later
 function searchBar(req, res, next) {
 
-	var query = req.body;
+	var query = req.body.searchQuery;
+	//query = query.split(' ');
+	r.table('monsters').getAll(query, {index:"monstersAll"})
+	.run(req._rdbConn, function(error, cursor) {
 
+		if(error) throw(error);
+		console.log(cursor.toArray());
+
+	});
+}
+*/
+
+function searchBar(req, res, next) {
+
+	var query = req.body.searchQuery;
+	if (req.body.searchQuery !== '') {
 	r.table('monsters').filter(
 
 		// make case insensitive search and see if monsterName or monsterdesc
 		// contains matches to the query. Then make the returned cursor to an
 		// array with objects (if there is any).
-		r.row('monsterName').match('(?i)^' + query.searchQuery)
-		.or(r.row('monsterDesc').match('(?i)^' + query.searchQuery))
+		r.row('monsterName').match('(?i)^' + query)
+		.or(r.row('monsterCharacteristic').match('(?i)^' + query))
+		.or(r.row('monsterKill').match(query))
+		.or(r.row('monsterFood').match(query))
+		.or(r.row('monsterLocation').match('(?i)^' + query))
 
 		).run(req._rdbConn, function(error, cursor) {
 
@@ -281,9 +317,39 @@ function searchBar(req, res, next) {
 			});
 		
 		});
+	} else { res.redirect('/'); }
+}
+// -----------------------------------------
+/*function(searchStuff) {
+var query = req.body.searchQuery;
+	query = query.split(' ');
+var result = '';
+r.table('monsters').filter(r.js('
+
+	function(monster) {
+
+		for(var i = 0; i < query.length; i++) {
+
+			r.row.monsterName = query[i];
+			r.row.monsterCharcteristics = query[i];
+		}
+
+	}
+
+	'))
+
+}*/
+// -----------------------------------------
+
+function searchAll(req, res, next) {
+
+	var search = req.body.search;
+	search = search.split(" ");
+	console.log(search);
+
+	r.table('')
 
 }
-
 
 // -----------------------------------------
 

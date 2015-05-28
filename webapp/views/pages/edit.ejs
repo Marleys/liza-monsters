@@ -10,28 +10,33 @@
 	<header>
 		<% include ../partials/header %>
 	</header>
-
+<div id="wrap">
 	<main>
 		 <div class="row">
-		 	 <div class="col-lg-8 col-sm-8 col-lg-offset-4 ">
-			 	  <form action="/update" method="post" id="insertMonster">
+		 	 <div class="col-lg-6 col-sm-6 col-lg-offset-6 ">
+		 	 <a href="/"> <img src="../images/logo-01.png"></a>
+		 	 <div class="container-4"
+			 	  <form action="/update" method="post" id="insertMonster" class="">
 					<% monster._settledValue.forEach(function(monster) { %>
 					<input type="text" value="<%= monster.monsterName %>" name="monsterName"> Monster name<br>
-					<input type="text" value="<%= monster.monsterCharcteristics %>" name="monsterCharcteristics"> Monster characteristics<br>
+					<input type="text" value="<%= monster.monsterCharacteristic %>" name="monsterCharacteristics"> Monster characteristics<br>
 					<input type="text" value="<%= monster.monsterFood %>" name="monsterFood"> Monster food<br>
 					<input type="text" value="<%= monster.monsterLocation %>" name="monsterLocation"> Monster Location<br>
-					<input type="text" value="<%= monster.monsterDesc %>" name="monsterDesc"> monster description<br>
+					<input type="text" value="<%= monster.monsterKill %>" name="monsterKill"> how to kill the fucker<br>
 					<input type="hidden" value="<%= monster.id %>" name="id">
 					<button type="submit">update Monster</button>
 					<%});%>
 				</form>
+				</div>
 					
   </div>
         </div>
 
 	</main>
 
-	<footer>
+	   </div>
+
+	<footer class="footer">
 		<% include ../partials/footer %>
 	</footer>
 
