@@ -1,45 +1,34 @@
-<!-- views/pages/index.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<% include ../partials/head %>
 </head>
-<body>
+<header>
+	<% include ../partials/header %>
+</header>
 
-	<header>
-		<% include ../partials/header %>
-	</header>
 <div id="wrap">
 	<main>
-		 <div class="row">
-		 	 <div class="col-lg-6 col-sm-6 col-lg-offset-6 ">
-		 	 <a href="/"> <img src="../images/logo-01.png"></a>
-		 	 <div class="container-4"
-			 	  <form action="/update" method="post" id="insertMonster" class="">
-					<% monster._settledValue.forEach(function(monster) { %>
-					<input type="text" value="<%= monster.monsterName %>" name="monsterName"> Monster name<br>
-					<input type="text" value="<%= monster.monsterCharacteristic %>" name="monsterCharacteristics"> Monster characteristics<br>
-					<input type="text" value="<%= monster.monsterFood %>" name="monsterFood"> Monster food<br>
-					<input type="text" value="<%= monster.monsterLocation %>" name="monsterLocation"> Monster Location<br>
-					<input type="text" value="<%= monster.monsterKill %>" name="monsterKill"> how to kill the fucker<br>
-					<input type="hidden" value="<%= monster.id %>" name="id">
-					<button type="submit">update Monster</button>
-					<%});%>
-				</form>
+		<div class="row">
+			<div class="col-lg-6 col-sm-6 col-lg-offset-6">
+				<a href="/"><img src="../images/logo-01.png"></a>
+
+				<div class="container-4">
+					<form action="/update" class="" id="insertMonster" method="post" name="insertMonster">
+						<% monster._settledValue.forEach(function(monster) { %><input name="monsterName" type="text" value="<%= monster.monsterName %>">
+						Monster name<br>
+						<input name="monsterCharacteristics" type="text" value="<%= monster.monsterCharacteristic %>"> Monster characteristics<br>
+						<input name="monsterFood" type="text" value="<%= monster.monsterFood %>"> Monster food<br>
+						<input name="monsterLocation" type="text" value="<%= monster.monsterLocation %>"> Monster Location<br>
+						<input name="monsterKill" type="text" value="<%= monster.monsterKill %>"> how to kill the fucker<br>
+						<input name="id" type="hidden" value="<%= monster.id %>"> <button type="submit">update Monster</button> <%});%>
+					</form>
 				</div>
-					
-  </div>
-        </div>
-
+			</div>
+		</div>
 	</main>
+</div>
 
-	   </div>
-
-	<footer class="footer">
-		<% include ../partials/footer %>
-	</footer>
-
-
-</body>
-</html>
+<footer class="footer">
+	<% include ../partials/footer %>
+</footer>

@@ -1,37 +1,30 @@
-<!-- views/pages/index.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<% include ../partials/head %>
 </head>
-<body>
+<header>
+	<% include ../partials/header %>
+</header>
 
-	<header>
-		<% include ../partials/header %>
-	</header>
 <div id="wrap">
 	<main>
-		 <div class="row">
-		 	 <div class="col-lg-6 col-sm-6 col-lg-offset-6  ">
-		 	 <a href="/"> <img src="../images/logo-01.png"></a>
-			 	 <ul>
-					<% for(var i = 0; i < allMonsters._settledValue.length; i++) { %>
-					<li><h2><a href="edit/<%= allMonsters._settledValue[i].monsterName%>"><%= allMonsters._settledValue[i].monsterName %></a></h2> </li>
-					<%}%>
-				</ul>
-				
-				
-  </div>
-        </div>
+		<div class="row">
+			<div class="col-lg-6 col-sm-6 col-lg-offset-6">
+				<a href="/"><img src="../images/logo-01.png"></a>
 
+				<ul>
+					<% for(var i = 0; i < allMonsters._settledValue.length; i++) { %>
+
+					<li>
+						<h2><a href="edit/<%= allMonsters._settledValue[i].monsterName %>"><%= allMonsters._settledValue[i].monsterName %></a></h2>
+					</li><%}%>
+				</ul>
+			</div>
+		</div>
 	</main>
 </div>
 
-	<footer class="footer">
-		<% include ../partials/footer %>
-	</footer>
-
-
-</body>
-</html>
+<footer class="footer">
+	<% include ../partials/footer %>
+</footer>

@@ -1,14 +1,11 @@
+<ul>
+    <% if(typeof(simpleSearch) !== "undefined") { %>
 
+    <li style="list-style: none; display: inline">
+        <h3>Search result:</h3><% for(var i = 0; i < simpleSearch.length; i++) { %>
+    </li>
 
-    	<ul>
-    	<% if(typeof(simpleSearch) !== "undefined") { %>
-            <h3>Search result:</h3>
-    		<% for(var i = 0; i < simpleSearch.length; i++) { %>
-    			<li>
-    				<h3><a href="/view/<%= simpleSearch[i].monsterName %>"><%= simpleSearch[i].monsterName %></a></h3>
-    			</li>
-    		<% } %>
-    	<% } %>
-    	</ul><!-- end ul -->
-
- 
+    <li>
+        <h3><a href="/view/<%= simpleSearch[i].monsterName %>"><%= simpleSearch[i].monsterName %></a></h3>
+    </li><% } %><% } %>
+</ul><!-- end ul -->

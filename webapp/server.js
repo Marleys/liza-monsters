@@ -2,22 +2,22 @@
 
 // ------------------ * requires * ------------------
 
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var r = require('rethinkdb');
+var express = require( 'express' ),
+	app = express(),
+	bodyParser = require( 'body-parser' ),
+	r = require( 'rethinkdb' );
 
 
-// ------------------ * express routes * ------------------
+// ------------------ * on first usage * ------------------
 
 // set view engine
-app.set('view engine', 'ejs');
+app.set( 'view engine', 'ejs' );
 
 // root (needed to beeing able to load js files etc. properly with script src)
-app.use(express.static(__dirname + '/views'));
+app.use( express.static(__dirname + '/views') );
 
 // create dbConnection
-app.use(createConnection);
+app.use( createConnection);
 
 // enable body parser to read the forms
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -26,7 +26,10 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 })); 
 
-// -----------------
+
+// ------------------ * param * ------------------
+
+// get monsters from url
 app.param('name', function(req, res, next, name) {
 
 	r.table('monsters').filter(r.row('monsterName').match('(?i)^' + name))
@@ -43,20 +46,22 @@ app.param('name', function(req, res, next, name) {
 });
 
 
-//add monster on post
-app.post('/test', addMonsters);
-app.post('/searchSimple', searchBar);
-app.post('/update', updateMonster);
-app.post('/searchAll', searchAll);
+// ------------------ * posts * ------------------
 
+//add monster on post
+app.post( '/test', addMonsters );
+app.post( '/searchSimple', searchBar );
+app.post( '/update', updateMonster );
 
 // ------------------ * render pages * ------------------
 
 // index page
-app.get('/', latest, numberOfMonsters, function(req, res, next) {
+app.get( '/', latest, numberOfMonsters, function( req, res, next ) {
 	
-	
-    res.render('pages/index', {
+	// functions defined below - simpleSearch is a global var.
+	// total = total number of monsters in db
+	// latest = 5 latest monsters added
+    res.render( 'pages/index', {
 
     	latest: req.latest,
     	total: req.total,	
@@ -68,22 +73,24 @@ app.get('/', latest, numberOfMonsters, function(req, res, next) {
 
 // -----------------------------------------
 
-// about page 
-app.get('/about', function(req, res) {
+// not visible to the user, contains the add form. Need to rename this
+app.get( '/about', function( req, res ) {
 
-	res.render('pages/about');
+	res.render( 'pages/about' );
 
 });
 
 
 // -----------------------------------------
 
-// views page
-app.get('/view/:name', function(req, res) {
+// views page for individual monster
+app.get( '/view/:name', function( req, res ) {
 
-	console.log(req.monster);
-	res.render('pages/view', {
+	// uses the param above to get the individual monster
+	res.render( 'pages/view', {
+
 		monster: req.monster
+
 	});
 
 
@@ -91,99 +98,111 @@ app.get('/view/:name', function(req, res) {
 
 //------------------------
 
-app.get('/all', function(req, res, next) {
+// gets all monsters in the db
+app.get( '/all', function( req, res, next ) {
 
 
-	r.table('monsters').run(req._rdbConn, function(error, allMonsters) {
-		if(error) return next(error);
-		req.allMonsters = allMonsters.toArray(function(error, result) {
-			if (error) return(error);
+	r.table( 'monsters' ).run( req._rdbConn, function( error, allMonsters ) {
+		
+		if( error ) return next( error );
+
+		req.allMonsters = allMonsters.toArray( function( error, result ) {
+
+			if ( error ) return( error );
+
 			return result;
+
 		});
-		console.log(req.allMonsters);
-		res.render('pages/all', {
+
+		res.render( 'pages/all', {
+
 			allMonsters: req.allMonsters
+
 		});
 	}); 
 
 });
 
+//------------------------
 
-app.get('/edit/:name', function(req, res) {
+app.get( '/edit/:name', function( req, res ) {
 
-	console.log(req.monster);
-	res.render('pages/edit', {
+	// uses the param above to get separate monster to enable editing
+	res.render( 'pages/edit', {
+
 		monster: req.monster
-	});
 
+	});
 
 });
 
+//------------------------
 
-app.get('/update/:id', function(req, res, next) {
+// when monster is updated user get transfered here and displays
+// the monsters so they can watch the changes.
+app.get( '/update/:id', function( req, res, next ) {
 
 	var id = req.params.id;
 
-	r.table('monsters').get(id)
-	.run(req._rdbConn, function(error, monster) {
+	r.table( 'monsters' ).get( id )
+	.run( req._rdbConn, function( error, monster ) {
+
 		if (error) throw(error);
+
 		res.render('pages/update', {
 
 		monster: monster
 
-	});
-	});
-
-	
-
-
-});
-
-app.get('/search', function(req, res) {
-
-	res.render('pages/search');
-
-});
-
-app.get('/allEdit', function(req, res, next) {
-
-
-	r.table('monsters').run(req._rdbConn, function(error, allMonsters) {
-		if(error) return next(error);
-		req.allMonsters = allMonsters.toArray(function(error, result) {
-			if (error) return(error);
-			return result;
 		});
-		console.log(req.allMonsters);
+
+	});
+
+});
+
+//------------------------
+
+// display all monsters to chose which one to edit
+app.get( '/allEdit', function( req, res, next ) {
+
+	r.table( 'monsters' ).run(req._rdbConn, function( error, allMonsters ) {
+
+		if( error ) return next( error );
+		req.allMonsters = allMonsters.toArray( function( error, result ) {
+
+			if( error ) return( error );
+			return result;
+
+		});
+
 		res.render('pages/allEdit', {
+
 			allMonsters: req.allMonsters
+
 		});
 	}); 
 
 });
+
 // ------------------ * global variables * ------------------
 
 var simpleSearch = [];
 
-
-
-
 // ------------------ * functions section * ------------------
 
-// create connection with db and store it in req.redbConn
+// create connection with db and store it in req._redbConn
 
-function createConnection(req, res, next) {
+function createConnection( req, res, next ) {
 	r.connect( 
 	{ 
 		host: 'localhost', 
 		port: 28015,
 		db: 'monsters' 
 
-	}, function(error, conn) {
+	}, function( error, conn ) {
 
-		if(error) {
+		if( error ) {
 
-			handleError(res, error);
+			handleError( res, error );
 		
 		} else {
 
@@ -197,36 +216,42 @@ function createConnection(req, res, next) {
 
 // -----------------------------------------
 
-function latest(req, res, next) {
-	r.table('monsters').orderBy(r.desc('createdAt')).limit(5)
-	.run(req._rdbConn, function(error, latest) {
+// get the 5 latest monsters and order them from most recently created
+function latest( req, res, next ) {
+
+	r.table( 'monsters' ).orderBy( r.desc( 'createdAt' )).limit( 5 )
+	.run( req._rdbConn, function( error, latest ) {
 
 		if(error) return next(error);
 		
 		req.latest = latest;
 		next();
+
 	});
 
 }
 
 // -----------------------------------------
 
-function numberOfMonsters(req, res, next) {
+// counts all monsters in the DB and returns a number
+function numberOfMonsters( req, res, next ) {
 
-	 r.table('monsters').count()
-	.run(req._rdbConn, function(error, result) {
+	 r.table( 'monsters' ).count()
+	.run( req._rdbConn, function( error, result ) {
+
 		if(error) return next(error);
 		
 		req.total = result;
 		next();
+
 	});
 
 }
 
 // -----------------------------------------
 
-// get form as json and add to db + redirect back
-function addMonsters(req, res, next) {
+// get form as json and add to db + redirect back to '/'
+function addMonsters( req, res, next ) {
 
 	// stuff to insert
 	var monster = req.body;
@@ -234,15 +259,15 @@ function addMonsters(req, res, next) {
 	monster.approved = 0;
 	monster.rating = [];
 	
-	r.table('monsters').insert(monster).run(req._rdbConn, function(error, result) {
+	r.table( 'monsters' ).insert( monster ).run( req._rdbConn, function( error, result ) {
 
-		if(error) {
+		if( error ) {
 
-			handleError(res, error);
+			handleError( res, error );
 
-		} else if(result.inserted !== 1) {
+		} else if( result.inserted !== 1 ) {
 
-			handleError(res, new Error("Document was not inserted. If the problem purrsists, please go to contacts and report the problem."));
+			handleError( res, new Error( "Document was not inserted. If the problem purrsists, please go to contacts and report the problem." ));
 
 		} else {
 
@@ -254,18 +279,23 @@ function addMonsters(req, res, next) {
 
 	});
 }
+
 // -----------------------------------------
 
-function updateMonster(req, res, next) {
-	console.log(req.body);
+// updates existig monsters in the db. Filters by monserId
+function updateMonster( req, res, next ) {
+
+	// get data from form
 	var monster = req.body;
 
-	r.table('monsters').filter({id: req.body.id}).update(monster).run(req._rdbConn, function(err, result) {
-		if(err) {
-			return next(err);
+	r.table( 'monsters' ).filter( { id: req.body.id } ).update( monster ).run( req._rdbConn, function( error, result ) {
+
+		if( error ) {
+			return next( error );
 
 		} 
-		res.redirect('/update/'+req.body.id);
+
+		res.redirect( '/update/'+req.body.id );
 		
 	});
 }
@@ -287,139 +317,55 @@ function searchBar(req, res, next) {
 }
 */
 
-function searchBar(req, res, next) {
+// -----------------------------------------
+
+// the search bar on the index page ('/')
+function searchBar( req, res, next ) {
 
 	var query = req.body.searchQuery;
-	if (req.body.searchQuery !== '') {
+
+	if( req.body.searchQuery !== '' ) {
+
 	r.table('monsters').filter(
 
-		// make case insensitive search and see if monsterName or monsterdesc
-		// contains matches to the query. Then make the returned cursor to an
-		// array with objects (if there is any).
-		r.row('monsterName').match('(?i)^' + query)
-		.or(r.row('monsterCharacteristic').match('(?i)^' + query))
-		.or(r.row('monsterKill').match(query))
-		.or(r.row('monsterFood').match(query))
-		.or(r.row('monsterLocation').match('(?i)^' + query))
+		// goes through all fields in the db until match founded
+		// '(?i)^' = case insensitive search. Only seem to work on strings with
+		// one word. Multi-word strings can only use "query"? Need to look further
+		// into this.
+		r.row( 'monsterName' ).match( '(?i)^' + query )
+		.or( r.row( 'monsterCharacteristic' ).match( '(?i)^' + query ))
+		.or( r.row( 'monsterKill' ).match( query ))
+		.or( r.row( 'monsterFood' ).match( query ))
+		.or (r.row( 'monsterLocation' ).match( '(?i)^' + query ))
 
-		).run(req._rdbConn, function(error, cursor) {
+		).run( req._rdbConn, function( error, cursor ) {
 
-			if(error) throw(error);
-			cursor.toArray(function(error, result) {
+			if ( error ) throw( error );
+			cursor.toArray( function( error, result ) {
 
-				if(error) throw(error);
-				//req.simpleSearch = result;
+				if( error ) throw( error );
 				res.redirect('/');
 				
-
 				return simpleSearch = result;
 
 			});
 		
 		});
+
 	} else { res.redirect('/'); }
 }
-// -----------------------------------------
-/*function(searchStuff) {
-var query = req.body.searchQuery;
-	query = query.split(' ');
-var result = '';
-r.table('monsters').filter(r.js('
-
-	function(monster) {
-
-		for(var i = 0; i < query.length; i++) {
-
-			r.row.monsterName = query[i];
-			r.row.monsterCharcteristics = query[i];
-		}
-
-	}
-
-	'))
-
-}*/
-// -----------------------------------------
-
-function searchAll(req, res, next) {
-
-	var search = req.body.search;
-	search = search.split(" ");
-	console.log(search);
-
-	r.table('')
-
-}
 
 // -----------------------------------------
 
-// just a simple search filtering by monsterName
-/*function searchName(req, res) {
-		var nameReq = req.params.name;
-		r.table('monsters').filter(
-
-			r.row('monsterName').match('(?i)^' + nameReq)
-
-			).run(req._rdbConn, function(error, cursor) {
-
-				if(error) throw(error);
-				 cursor.toArray(function(error, result) {
-
-					if(error) throw(error);
-					return result;
-				
-
-				});
-
-			});  
-
-}*/
-
-/*function searchName(req, res, next) {
-	//var nameReq = req.params.name;
-	r.table('monsters').filter(r.row('monsterName').match('(?i)^' + req.params.name)).run(req._rdbConn, function(err, cursor) {
-		if(err) {
-			return next(err);
-		} else {
-			cursor.toArray(function(err, result) {
-				if(err) {
-					return next(err);
-				} else {
-					req.test = result;
-				}
-			});
-		} next();
-	}); 
-}*/
-
-/*function getMonster(req, res, next) {
-
-	var test = req.params.monsterName;
-
-	r.table('monsters').filter(r.row('monsterName').match('(?i)^' + test)).run(req._rdbConn).then(function(cursor) {
-		return cursor.toArray();
-	}).then(function(result) {
-		res.send(JSON.stringify(result));
-	}).error(handleError(res))
-	.finally(next);
-}*/
-
-
-
-
-// -----------------------------------------
-
-// get error message
-function handleError(res) {
-    return function(error) {
-        res.send(500, {error: error.message});
+// handle error message
+function handleError( res ) {
+    return function( error ) {
+        res.send( 500, { error: error.message } );
     }
 }
-
-
 
 // ------------------ * start the server * ------------------
 
 // start listening
-app.listen(7000);
-console.log('listening to port 7000');
+app.listen( 7000 );
+console.log( 'listening to port 7000' );

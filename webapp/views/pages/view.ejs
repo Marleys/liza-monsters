@@ -1,42 +1,66 @@
 <!-- views/pages/index.ejs -->
-
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-	<% include ../partials/head %>
+    <% include ../partials/head %>
 </head>
+
 <body>
+    <header>
+        <% include ../partials/header %>
+    </header>
 
-	<header>
-		<% include ../partials/header %>
-	</header>
-<div id="wrap">
-<div class="container-fluid">
-	<main>
-		 <div class="row">
-		 	 <div class="col-lg-6 col-sm-6 col-lg-offset-6 displayMonster">
-			 	 <a href="/"> <img src="../images/logo-01.png"></a>
-			 	 <ul>
-					<% monster._settledValue.forEach(function(monster) { %>
-					<li><h2 id="headMonster"><%= monster.monsterName %></h2> </li>
-					<li><a href="/edit/<%= monster.monsterName %>"<i class="fa fa-pencil-square-o fa-3x edit"></i></a></li>
-					<li><h3 class="orange">Location:</h3> <h3 class="readable"><%= monster.monsterLocation %> </h3></li>
-					<li><h3 class="orange">How to kill it:</h3> <h3 class="readable"><%= monster.monsterKill %></h3> </li>
-					<li><h3 class="orange">Food of choice:</h3> <h3 class="readable"><%= monster.monsterFood %> </h3></li>
-					<li><h3 class="orange">Characteristics:</h3> <h3 class="readable"><%= monster.monsterCharacteristic %> </h3></li>
-					<% });%>
-				</ul>
+    <div id="wrap">
+        <div class="container-fluid">
+            <main>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-lg-offset-6 displayMonster">
+                        <a href="/"><img src="../images/logo-01.png"></a>
 
-  				</div>
-       		</div>
-	
-	</main>
-	</div>
-</div>
-		<footer class="footer">
-		<% include ../partials/footer %>
-	</footer>
+                        <ul>
+                            <% monster._settledValue.forEach( function( monster ) { %>
 
+                            <li>
+                                <h2 id="headMonster"><%= monster.monsterName %></h2>
+                            </li>
 
+                            <li>
+                                <a class="fa fa-pencil-square-o fa-3x edit" href="/edit/<%= monster.monsterName %>"></a>
+                            </li>
+
+                            <li>
+                                <h3 class="orange">Location:</h3>
+
+                                <h3 class="readable"><%= monster.monsterLocation %></h3>
+                            </li>
+
+                            <li>
+                                <h3 class="orange">How to kill it:</h3>
+
+                                <h3 class="readable"><%= monster.monsterKill %></h3>
+                            </li>
+
+                            <li>
+                                <h3 class="orange">Food of choice:</h3>
+
+                                <h3 class="readable"><%= monster.monsterFood %></h3>
+                            </li>
+
+                            <li>
+                                <h3 class="orange">Characteristics:</h3>
+
+                                <h3 class="readable"><%= monster.monsterCharacteristic %></h3>
+                            </li><% });%>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <% include ../partials/footer %>
+    </footer>
 </body>
 </html>

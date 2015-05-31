@@ -1,43 +1,29 @@
-<!-- views/pages/index.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<% include ../partials/head %>
 </head>
-<body>
+<header>
+	<% include ../partials/header %>
+</header>
 
-	<header>
-		<% include ../partials/header %>
-	</header>
 <div id="wrap">
-<div class="container-fluid">
-	<main>
-		 <div class="row">
-		 	 <div class="col-lg-6 col-sm-6 col-lg-offset-6 advanced_search">
-			<div class="container-4">
-        			<form action="/searchAll" method="post">
-                    <input type="search" id="search" name="search" placeholder="Search for monsters..." />
-                    <button class="icon"><i class="fa fa-search"></i></button>
-                    </form>
-                   
-                
-					                   	
-                </div>
-
-		 	 	</form>
-
-
-  				</div>
-       		</div>
-	
-	</main>
+	<div class="container-fluid">
+		<main>
+			<div class="row">
+				<div class="col-lg-6 col-sm-6 col-lg-offset-6 advanced_search">
+					<div class="container-4">
+						<form action="/searchAll" method="post">
+							<input id="search" name="search" placeholder="Search for monsters..." type="search"> 
+							<button class="icon fa fa-search" style="font-style: italic"></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</main>
 	</div>
 </div>
-		<footer class="footer">
-		<% include ../partials/footer %>
-	</footer>
 
-
-</body>
-</html>
+<footer class="footer">
+	<% include ../partials/footer %>
+</footer>

@@ -5,21 +5,22 @@
 var menuButton = document.getElementById("menu-toggle");
 var menuOffCanvas = document.getElementById('nav-off-canvas');
 
-console.log(menuOffCanvas);
 
-// event listeners
+// event listener
 
-menuButton.addEventListener('click', function() {
+// make the navigation appear and dissapear. the animation effect
+// is css styling (go look for it there).
+menuButton.addEventListener( 'click', function() {
 
-	if (menuButton.title == "false") {
+	if ( menuButton.title == 'false' ) {
 		
 		menuOffCanvas.style.left = '90vw';
-		menuButton.title = "true";
+		menuButton.title = 'true';
 	
 	} else {
 
 		menuOffCanvas.style.left = '105vw';
-		menuButton.title = "false";
+		menuButton.title = 'false';
 
 	}
 

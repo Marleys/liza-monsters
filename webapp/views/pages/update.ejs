@@ -1,43 +1,50 @@
-<!-- views/pages/index.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<% include ../partials/head %>
+    <% include ../partials/head %>
 </head>
-<body>
+<header>
+    <% include ../partials/header %>
+</header>
 
-	<header>
-		<% include ../partials/header %>
-	</header>
 <div id="wrap">
-<div class="container-fluid">
-	<main>
-		 <div class="row">
-		 	 <div class="col-lg-6 col-sm-6 col-lg-offset-6 displayMonster">
-			 	 <h1>Updated:</h1>
-			 	 <ul>
-			 	 	<% console.log(monster) %> 
-				
-					<li><h2 id="headMonster"><%= monster.monsterName %></h2> </li>
-					<li><a href="/edit/<%= monster.monsterName %>"<i class="fa fa-pencil-square-o fa-3x edit"></i></a></li>
-					<li><h3>Characteristics: <%= monster.monsterCharcteristics %> </h3></li>
-					<li><h3>Food of choice: <%= monster.monsterFood %> </h3></li>
-					<li><h3>Location: <%= monster.monsterLocation %> </h3></li>
-					<li><p><%= monster.monsterDesc %></p> </li>
-				
-				</ul>
-				
-  				</div>
-       		</div>
-	
-	</main>
-	</div>
+    <div class="container-fluid">
+        <main>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-lg-offset-6 displayMonster">
+                    <h1>Updated:</h1>
+
+                    <ul>
+                        <li>
+                            <h2 id="headMonster"><%= monster.monsterName %></h2>
+                        </li>
+
+                        <li>
+                            <a class="fa fa-pencil-square-o fa-3x edit" href="/edit/%3C%=%20monster.monsterName%20%%3E" style="font-style: italic"></a>
+                        </li>
+
+                        <li>
+                            <h3>Characteristics: <%= monster.monsterCharcteristics %></h3>
+                        </li>
+
+                        <li>
+                            <h3>Food of choice: <%= monster.monsterFood %></h3>
+                        </li>
+
+                        <li>
+                            <h3>Location: <%= monster.monsterLocation %></h3>
+                        </li>
+
+                        <li>
+                            <p><%= monster.monsterDesc %></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
 </div>
-		<footer class="footer">
-		<% include ../partials/footer %>
-	</footer>
 
-
-</body>
-</html>
+<footer class="footer">
+    <% include ../partials/footer %>
+</footer>

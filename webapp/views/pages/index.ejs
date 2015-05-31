@@ -3,53 +3,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<% include ../partials/head %>
+  <% include ../partials/head %>
 </head>
 <body>
 
-	<header>
-		<% include ../partials/header %>
-	</header>
+  <header>
+    <% include ../partials/header %>
+  </header>
 <div id="wrap">
-	<main>
-		 <div class="row">
-        	<div class="col-lg-8 col-sm-8 col-lg-offset-4 text-center">
+  <main>
+     <div class="row">
+          <div class="col-lg-8 col-sm-8 col-lg-offset-4 text-center">
            <a href="/"> <img src="../images/logo-01.png"></a>
-        		<div class="container-4">
-        			<form action="/searchSimple" method="post">
+            <div class="container-4">
+              <form action="/searchSimple" method="post">
                     <input type="search" id="search" name="searchQuery" placeholder="Search for monsters..." />
                     <button class="icon"><i class="fa fa-search"></i></button>
                     </form>
                    
                 
-					                   	
+                              
                 </div>
-        	</div>
+          </div>
         </div>
         <div class="row">
         <div id="info_section">
-        	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-offset-5 info">
-        	 <a href="/all"><i class="fa fa-info-circle fa-5x info_sign" title="show all monsters"></i></a>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-offset-5 info">
+           <a href="/all"><i class="fa fa-info-circle fa-5x info_sign" title="show all monsters"></i></a>
              <% include ../partials/simpleSearch %>
-        	</div>
-        	<div class="col-lg-3 col-md-2 latest_monsters">
+          </div>
+          <div class="col-lg-3 col-md-2 latest_monsters">
             <h3 class="black">Monsters<br> stored in DB:</h3><h3 class="orange"> <%= total %> </h3>
-                   	<h3>Latest monsters:
-                   	<% for(var i = 0; i < latest.length; i++) { %> 
-                   		<h3><a href="/view/<%= latest[i].monsterName %>"><%= latest[i].monsterName %> </a></h3></h3>
-                   	<%}%>
+                    <h3>Latest monsters:
+                    <% for(var i = 0; i < latest.length; i++) { %> 
+                      <h3><a href="/view/<%= latest[i].monsterName %>"><%= latest[i].monsterName %> </a></h3></h3>
+                    <%}%>
                     </div>
-        	</div>
+          </div>
 
      
 
         
 </main>
-	   </div>
+     </div>
 
-	<footer class="footer">
-		<% include ../partials/footer %>
-	</footer>
+  <footer class="footer">
+    <% include ../partials/footer %>
+  </footer>
 
 
 </body>
